@@ -185,19 +185,50 @@ window.onload = function load() {
             li.appendChild(Block[count++]);
         }
     }
-    ul.addEventListener('click', function (e){
-        console.log(e.pageX);
-        const kash = e.pageX;
-        // ul.style.left=e.pageX+'px';
-        setTimeout( function () {
-            if(e.pageX>kash) {
-                nextSlide();
+    // ul.addEventListener('click', function (e){
+    //     console.log(e.pageX);
+    //     const kash = e.pageX;
+    //     // ul.style.left=e.pageX+'px';
+    //     setTimeout( function () {
+    //         if(e.pageX>kash) {
+    //             nextSlide();
+    //         }
+    //         else {
+    //             previousSlide();
+    //         }
+    //     }, 0);
+    // });
+
+
+        ul.onmousedown = function(e) { // 1. отследить нажатие
+
+            // подготовить к перемещению
+            // 2. разместить на том же месте, но в абсолютных координатах
+            ul.style.position = 'absolute';
+            moveAt(e);
+            // переместим в body, чтобы мяч был точно не внутри position:relative
+            document.body.appendChild(ul);
+
+            ul.style.zIndex = 1000; // показывать мяч над другими элементами
+
+            // передвинуть мяч под координаты курсора
+            // и сдвинуть на половину ширины/высоты для центрирования
+            function moveAt(e) {
+                ul.style.left = e.pageX - ul.offsetWidth / 2 + 'px';
+                ul.style.top = e.pageY - ul.offsetHeight / 2 + 'px';
             }
-            else {
-                previousSlide();
+
+            // 3, перемещать по экрану
+            document.onmousemove = function(e) {
+                moveAt(e);
             }
-        }, 0);
-    });
+
+            // 4. отследить окончание переноса
+            ul.onmouseup = function() {
+                document.onmousemove = null;
+                ul.onmouseup = null;
+            }
+        }
 
 ///////////////
 
@@ -300,6 +331,6 @@ function full (data, count) {
         descriptionText[count].innerHTML = data.items[0].snippet.description.substring(0,25)+"...";
     })    
 };
-// addEvent(window, "resize", function(event) {
-//     console.log('resized');
-//   });
+window.addEventListener('resize', () => {
+    console.log('op');
+})
