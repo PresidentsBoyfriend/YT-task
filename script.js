@@ -1,12 +1,4 @@
-let searchButton = document.querySelector('.btnSearch'),
-    searchText = document.querySelector('.search'),
-    img=[];
-
-// for (let i = 0; i < 5; i++) {
-//     img[i] = document.createElement('img');
-//     img[i].className = "img"+i;
-//     document.body.appendChild(img[i]);
-// }
+let img=[];
 
 let Block = [],
 imgCanvas = [],
@@ -92,13 +84,22 @@ let btnSearch = document.createElement('button');
 btnSearch.className = "btnSearch";
 searchBox.appendChild(btnSearch);
 btnSearch.innerHTML = "Click";
+// setInterval(function (){
+//     load();
+// },2);
 
-window.onload = function () {
-    
-    if (window.screen.availWidth>320 && window.screen.availWidth<920) {
-        let ul = document.createElement('ul');
+
+
+
+
+
+///////////////
+
+window.onload = function load() {
+    let ul = document.createElement('ul');
         ul.setAttribute('id','slides');
         document.body.appendChild(ul);
+    if (window.screen.availWidth>320 && window.screen.availWidth<920) {
         for (let i=0; i<5; i++){
             let li=document.createElement('li');
             if (i==0) {
@@ -133,10 +134,7 @@ window.onload = function () {
     }
     else if (window.screen.availWidth>920 && window.screen.availWidth<1220)
     {
-        let ul = document.createElement('ul');
         let count = 0;
-        ul.setAttribute('id','slides');
-        document.body.appendChild(ul);
         for (let i=0; i<4; i++){
             let li=document.createElement('li');
             if (i==0) {
@@ -171,10 +169,7 @@ window.onload = function () {
         };
     }
     else if (window.screen.availWidth>1220) {
-        let ul = document.createElement('ul');
         let count = 0;
-        ul.setAttribute('id','slides');
-        document.body.appendChild(ul);
         for (let i=0; i<2; i++){
             let li=document.createElement('li');
             if (i==0) {
@@ -189,28 +184,60 @@ window.onload = function () {
             li.appendChild(Block[count++]);
             li.appendChild(Block[count++]);
         }
+    }
+    ul.addEventListener('click', function (e){
+        console.log(e.pageX);
+        const kash = e.pageX;
+        // ul.style.left=e.pageX+'px';
+        setTimeout( function () {
+            if(e.pageX>kash) {
+                nextSlide();
+            }
+            else {
+                previousSlide();
+            }
+        }, 0);
+    });
+
+///////////////
+
+
+
+
+
+
+///////////////
+
+
+
+
+
+
+
         var slides = document.querySelectorAll('#slides .slide');
         var currentSlide = 0;
         nextBtn.onclick = function() {
-            nextSlide();
+        nextSlide();
         };
         previousBtn.onclick = function() {
-            previousSlide();
+        previousSlide();
         };
         function nextSlide() {
-            goToSlide(currentSlide+1);
+        goToSlide(currentSlide+1);
         };
         function previousSlide() {
-            goToSlide(currentSlide-1);
+        goToSlide(currentSlide-1);
         };
         function goToSlide(n) {
-            slides[currentSlide].className = 'slide';
-            currentSlide = (n+slides.length)%slides.length;
-            slides[currentSlide].className = 'slide showing';
+        slides[currentSlide].className = 'slide';
+        currentSlide = (n+slides.length)%slides.length;
+        slides[currentSlide].className = 'slide showing';
         };
-    }
 }
 
+
+
+    
 // (function loop(){
 //     requestAnimFrame(loop);
 //     checkScreenSize();
@@ -229,7 +256,7 @@ document.body.appendChild(previousBtn);
 document.body.appendChild(nextBtn);
 
 btnSearch.addEventListener('click', function() {
-    console.log(window.screen.availWidth);
+    // console.log(window.screen.availWidth);
     if (search.value) {
         let xmlHttp = new XMLHttpRequest(),
             count = 0;
@@ -263,7 +290,7 @@ function getVideoStatById (id,count) {
 
 function full (data, count) {
     requestAnimationFrame (function () {
-        console.log(data.items[0]);
+        // console.log(data.items[0]);
         let dateOf = new Date(Date.parse(data.items[0].snippet.publishedAt));
         titleText[count].innerHTML = data.items[0].snippet.title;
         imgCanvas[count].src = data.items[0].snippet.thumbnails.medium.url;
@@ -273,3 +300,6 @@ function full (data, count) {
         descriptionText[count].innerHTML = data.items[0].snippet.description.substring(0,25)+"...";
     })    
 };
+// addEvent(window, "resize", function(event) {
+//     console.log('resized');
+//   });
