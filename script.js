@@ -287,7 +287,12 @@ document.body.appendChild(previousBtn);
 document.body.appendChild(nextBtn);
 
 btnSearch.addEventListener('click', function() {
-    // console.log(window.screen.availWidth);
+    getItems();
+});
+
+
+// btnSearch.addEventListener('click', function() {
+//     // console.log(window.screen.availWidth);
     if (search.value) {
         let xmlHttp = new XMLHttpRequest(),
             count = 0;
@@ -331,6 +336,7 @@ function full (data, count) {
         descriptionText[count].innerHTML = data.items[0].snippet.description.substring(0,25)+"...";
     })    
 };
+
 window.addEventListener('resize', () => {
     console.log('op');
 })
