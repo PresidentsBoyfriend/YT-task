@@ -107,7 +107,7 @@ searchBox.appendChild(btnSearch);
 btnSearch.innerHTML = "Click";
 searchBox.appendChild(on_off);
 let check;
-check = false;
+check = true;
 on_off.addEventListener('click', () => {
     if (check == false) {
         document.body.style.backgroundColor = 'white';
